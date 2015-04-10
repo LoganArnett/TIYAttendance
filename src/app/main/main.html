@@ -10,24 +10,57 @@
     </p>
     <p><a class="btn btn-lg btn-success" ng-href="#">Splendid!</a></p>
   </div>
+  
+  <div class="col-xs-12 new-student">
+      <form ng-submit="app.addStudent(app.student)">
+          <label>Full Name</label><br>
+          <input type="text" ng-model="app.student.name"><br>
+          <label>Github Handle</label><br>
+          <input type="text" ng-model="app.student.github"><br>
+          <button class="btn btn-primary">Add</button>
+      </form>
+  </div>
 
-  <div class="row">
-    <div class="col-sm-6 col-md-4" ng-repeat="awesomeThing in awesomeThings | orderBy:'rank'">
-      <div class="thumbnail">
-        <img class="pull-right" ng-src="assets/images/{{awesomeThing.logo}}" alt="{{awesomeThing.title}}">
-        <div class="caption">
-          <h3>{{awesomeThing.title}}</h3>
-          <p>{{awesomeThing.description}}</p>
-          <p><a ng-href="{{awesomeThing.url}}">{{awesomeThing.url}}</a></p>
-        </div>
+  <div class="col-xs-12 student" ng-repeat="student in app.feeList">
+      <div class="col-xs-4">
+          <img src="http://loremflickr.com/240/240" alt="" class="thumbnail">
+          <h4 class="student-name" ng-dblclick="app.editName()" ng-show="app.nameEdit === false">{{student.name}}</h4>
+          <form>
+              <input type="text" ng-show="app.nameEdit === true" value="{{student.name}}">
+          </form>
+          <p ng-dblclick="app.editGithub()" ng-show="app.githubEdit === false">{{student.github}}</p>
+          <form >
+              <input type="text" ng-show="app.githubEdit === true" value="{{student.github}}" ng>
+          </form>
       </div>
-    </div>
+      <div class="col-xs-8 counters">
+         <div class="col-xs-4">
+              <button class="btn btn-success" ng-click="app.presentMinus(student)"><span class="glyphicon glyphicon-minus"></span>
+              </button>
+              Present
+              <button class="btn btn-success" ng-click="app.presentPlus(student)"><span class="glyphicon glyphicon-plus"></span>
+              </button>
+              <p> {{student.present}} </p>
+          </div>
+          <div class="col-xs-4">
+              <button class="btn btn-warning" ng-click="app.tardyMinus(student)"><span class="glyphicon glyphicon-minus"></span>
+              </button>
+              Tardy
+              <button class="btn btn-warning" ng-click="app.tardyPlus(student)"><span class="glyphicon glyphicon-plus"></span>
+              </button>
+              <p> {{student.tardy}} </p>
+          </div>
+          <div class="col-xs-4">
+              <button class="btn btn-danger" ng-click="app.absentMinus(student)"><span class="glyphicon glyphicon-minus"></span>
+              </button>
+              Absent
+              <button class="btn btn-danger" ng-click="app.absentPlus(student)"><span class="glyphicon glyphicon-plus"></span>
+              </button>
+              <p> {{student.absent}} </p>
+          </div>
+      </div>
   </div>
 
   <hr>
-
-  <div class="footer">
-    <p>With ♥ from <a href="https://twitter.com/Swiip">@Swiip</a></p>
-  </div>
 
 </div>

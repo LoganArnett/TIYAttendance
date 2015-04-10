@@ -1,64 +1,77 @@
 'use strict';
 
 angular.module('tiyattendance')
-  .controller('MainCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      {
-        'title': 'AngularJS',
-        'url': 'https://angularjs.org/',
-        'description': 'HTML enhanced for web apps!',
-        'logo': 'angular.png'
-      },
-      {
-        'title': 'BrowserSync',
-        'url': 'http://browsersync.io/',
-        'description': 'Time-saving synchronised browser testing.',
-        'logo': 'browsersync.png'
-      },
-      {
-        'title': 'GulpJS',
-        'url': 'http://gulpjs.com/',
-        'description': 'The streaming build system.',
-        'logo': 'gulp.png'
-      },
-      {
-        'title': 'Jasmine',
-        'url': 'http://jasmine.github.io/',
-        'description': 'Behavior-Driven JavaScript.',
-        'logo': 'jasmine.png'
-      },
-      {
-        'title': 'Karma',
-        'url': 'http://karma-runner.github.io/',
-        'description': 'Spectacular Test Runner for JavaScript.',
-        'logo': 'karma.png'
-      },
-      {
-        'title': 'Protractor',
-        'url': 'https://github.com/angular/protractor',
-        'description': 'End to end test framework for AngularJS applications built on top of WebDriverJS.',
-        'logo': 'protractor.png'
-      },
-      {
-        'title': 'Bootstrap',
-        'url': 'http://getbootstrap.com/',
-        'description': 'Bootstrap is the most popular HTML, CSS, and JS framework for developing responsive, mobile first projects on the web.',
-        'logo': 'bootstrap.png'
-      },
-      {
-        'title': 'Angular UI Bootstrap',
-        'url': 'http://angular-ui.github.io/bootstrap/',
-        'description': 'Bootstrap components written in pure AngularJS by the AngularUI Team.',
-        'logo': 'ui-bootstrap.png'
-      },
-      {
-        'title': 'Sass (Node)',
-        'url': 'https://github.com/sass/node-sass',
-        'description': 'Node.js binding to libsass, the C version of the popular stylesheet preprocessor, Sass.',
-        'logo': 'node-sass.png'
+  .controller('MainCtrl', function (Firebase, $firebaseArray) {
+    var feeStudentList = new Firebase('https://tiyattendance.firebaseio.com/FEE--Spring--2015'),
+        self = this;
+    this.feeList = $firebaseArray(feeStudentList);
+    
+    this.student = {
+        name: '',
+        github: '',
+        present: 0,
+        tardy: 0,
+        absent: 0
+    };
+    
+    this.addStudent = function(user){
+        self.feeList.$add({
+            name: user.name,
+            github: user.github,
+            present: user.present,
+            tardy: user.tardy,
+            absent: user.absent
+        });
+        
+        return self.student = {
+                    name: '',
+                    github: '',
+                    present: 0,
+                    tardy: 0,
+                    absent: 0
+                };
+    };
+    
+    this.nameEdit = false;
+    this.githubEdit = false;
+    
+    this.editName = function(){
+      if(self.nameEdit == false){
+          return self.nameEdit = true;
       }
-    ];
-    angular.forEach($scope.awesomeThings, function(awesomeThing) {
-      awesomeThing.rank = Math.random();
-    });
+      else {
+          return self.nameEdit = false;
+      }
+    };
+    
+    this.editGithub = function(){
+       if(self.githubEdit == false){
+          return self.githubEdit = true;
+      }
+      else {
+          return self.githubEdit = false;
+      };
+    };
+    
+    this.presentPlus = function(student){
+        return student.present++;
+    };
+    this.presentMinus = function(student){
+        return student.present--;
+    };
+    
+    this.tardyPlus = function(student){
+        return student.tardy++;
+    };
+    this.tardyMinus = function(student){
+        return student.tardy--;
+    };
+    
+    this.absentPlus = function(student){
+        return student.absent++;
+    };
+    this.absentMinus = function(student){
+        return student.absent--;
+    };
+    
   });
