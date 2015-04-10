@@ -1,16 +1,21 @@
-.browsehappy {
-  margin: 0.2em 0;
-  background: #ccc;
-  color: #000;
-  padding: 0.2em 0;
+body {
+    padding: 0;
+    margin: 0;
+}
+
+.container-fluid {
+    padding: 0;
 }
 
 .thumbnail {
   height: 200px;
+}
 
-  img.pull-right {
-    width: 50px;
-  }
+.edit {
+    display: none;
+}
+.edit.editing {
+    display: block;
 }
 // injector
 // endinjector

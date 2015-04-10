@@ -1,63 +1,38 @@
-<div class="container">
+<div class="container-fluid">
 
   <div ng-include="'components/navbar/navbar.html'"></div>
 
   <div class="jumbotron text-center">
-    <h1>'Allo, 'Allo!</h1>
-    <p class="lead">
-      <img src="assets/images/yeoman.png" alt="I'm Yeoman"><br>
-      Always a pleasure scaffolding your apps.
-    </p>
-    <p><a class="btn btn-lg btn-success" ng-href="#">Splendid!</a></p>
+    <h3>Welcome {{cohort.user.fullName}}</h3>
+    <p>Create a New or View Past Cohorts</p>
   </div>
   
-  <div class="col-xs-12 new-student">
-      <form ng-submit="app.addStudent(app.student)">
-          <label>Full Name</label><br>
-          <input type="text" ng-model="app.student.name"><br>
-          <label>Github Handle</label><br>
-          <input type="text" ng-model="app.student.github"><br>
+  <div class="col-xs-12 new-class">
+      <form ng-submit="cohort.addCohort(cohort.cohortInfo)">
+          <label>Cohort Name</label><br>
+          <input type="text" ng-model="cohort.cohortInfo.name"><br>
+          <label>Github Repo</label><br>
+          <input type="text" ng-model="cohort.cohortInfo.repo"><br>
           <button class="btn btn-primary">Add</button>
       </form>
   </div>
 
-  <div class="col-xs-12 student" ng-repeat="student in app.feeList">
+  <div class="col-xs-12 student" ng-repeat="(id, info) in cohort.cohortArray">
       <div class="col-xs-4">
-          <img src="http://loremflickr.com/240/240" alt="" class="thumbnail">
-          <h4 class="student-name" ng-dblclick="app.editName()" ng-show="app.nameEdit === false">{{student.name}}</h4>
-          <form>
-              <input type="text" ng-show="app.nameEdit === true" value="{{student.name}}">
-          </form>
-          <p ng-dblclick="app.editGithub()" ng-show="app.githubEdit === false">{{student.github}}</p>
-          <form >
-              <input type="text" ng-show="app.githubEdit === true" value="{{student.github}}" ng>
+          <h4 class="cohort-name" ng-dblclick="cohort.editName(info)" ng-hide="info.editName == true">{{info.name}}</h4>
+          <form ng-submit="cohort.editedName(info)">
+              <input type="text" class="edit" ng-class="{editing: info.editName == true}" value="{{info.name}}" ng-model="info.name" ng-blur="cohort.cancelEditName(info)">
           </form>
       </div>
-      <div class="col-xs-8 counters">
-         <div class="col-xs-4">
-              <button class="btn btn-success" ng-click="app.presentMinus(student)"><span class="glyphicon glyphicon-minus"></span>
-              </button>
-              Present
-              <button class="btn btn-success" ng-click="app.presentPlus(student)"><span class="glyphicon glyphicon-plus"></span>
-              </button>
-              <p> {{student.present}} </p>
-          </div>
-          <div class="col-xs-4">
-              <button class="btn btn-warning" ng-click="app.tardyMinus(student)"><span class="glyphicon glyphicon-minus"></span>
-              </button>
-              Tardy
-              <button class="btn btn-warning" ng-click="app.tardyPlus(student)"><span class="glyphicon glyphicon-plus"></span>
-              </button>
-              <p> {{student.tardy}} </p>
-          </div>
-          <div class="col-xs-4">
-              <button class="btn btn-danger" ng-click="app.absentMinus(student)"><span class="glyphicon glyphicon-minus"></span>
-              </button>
-              Absent
-              <button class="btn btn-danger" ng-click="app.absentPlus(student)"><span class="glyphicon glyphicon-plus"></span>
-              </button>
-              <p> {{student.absent}} </p>
-          </div>
+      <div class="col-xs-4 counters">
+         <a class="btn btn-github btn-lg" ng-href="{{info.repo}}">Repo</a>
+         <span ng-click="cohort.editRepo(info)" ng-hide="info.editRepo == true" class="glyphicon glyphicon-pencil"></span>
+          <form ng-submit="cohort.editedRepo(info)">
+              <input type="text" class="edit" ng-class="{editing: info.editRepo == true}" value="{{info.repo}}" ng-model="info.repo" ng-blur="cohort.cancelEditRepo(info)">
+          </form>
+      </div>
+      <div class="col-xs-4 counters">
+         <button class="btn btn-tiy" ui-sref="students({ cohort: info.$id, instructor_id: cohort.user.uid })">View</button>
       </div>
   </div>
 
