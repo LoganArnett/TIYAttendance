@@ -1,15 +1,6 @@
 <div class="container-fluid">
 
   <div ng-include="'components/navbar/navbar.html'"></div>
-
-  <div class="jumbotron text-center">
-    <h1>'Allo, 'Allo!</h1>
-    <p class="lead">
-      <img src="assets/images/yeoman.png" alt="I'm Yeoman"><br>
-      Always a pleasure scaffolding your apps.
-    </p>
-    <p><a class="btn btn-lg btn-success" ng-href="#">Splendid!</a></p>
-  </div>
   
   <div class="col-xs-12 new-student">
       <form ng-submit="stud.addStudent(stud.student)">
@@ -23,8 +14,8 @@
       </form>
   </div>
 
-  <div class="col-xs-12 student" ng-repeat="student in stud.students">
-      <div class="col-xs-12 col-md-6">
+  <div class="col-xs-12 student">
+      <div class="col-xs-12 col-md-6 col-lg-4" ng-repeat="student in stud.students">
           <img ng-src="{{student.avatar}}" alt="" class="thumbnail" ng-dblclick="stud.editAvatar(student)" ng-hide="student.editAvatar == true">
           <form ng-submit="stud.editedAvatar(student)">
               <input type="text" class="edit" ng-class="{editing: student.editAvatar == true}" value="{{student.avatar}}" model="student.avatar" ng-blur="stud.cancelEditAvatar(student)">
@@ -38,6 +29,7 @@
               <input type="text" class="edit" ng-class="{editing: student.editHandle == true}" value="{{student.handle}}" ng-model="student.handle" ng-blur="stud.cancelEditHandle(student)">
           </form>
       </div>
+<!--
       <div class="col-xs-12 col-md-6 counters">
          <div class="col-xs-4">
               <button class="btn btn-success" ng-click="stud.presentMinus(student)"><span class="glyphicon glyphicon-minus"></span>
@@ -64,6 +56,7 @@
               <p> {{student.absent}} </p>
           </div>
       </div>
+-->
   </div>
 
   <hr>
