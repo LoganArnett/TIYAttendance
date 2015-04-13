@@ -16,6 +16,11 @@ angular.module('tiyattendance', ['ngAnimate', 'ngTouch', 'ngSanitize', 'restangu
         url: ':instructor_id/:cohort/students',
         templateUrl: 'app/students/students.html',
         controller: 'StudentsCtrl as stud'
+      })
+      .state('attendance', {
+        url: ':instructor_id/:cohort/attendance',
+        templateUrl: 'app/attendance/attendance.html',
+        controller: 'AttendCtrl as attend'
       });
 
     $urlRouterProvider.otherwise('/');

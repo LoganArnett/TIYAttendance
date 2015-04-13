@@ -25,11 +25,18 @@
           </form>
       </div>
       <div class="col-xs-4 counters">
+        <div class="col-xs-6">
          <a class="btn btn-github btn-lg" ng-href="{{info.repo}}">Repo</a>
          <span ng-click="cohort.editRepo(info)" ng-hide="info.editRepo == true" class="glyphicon glyphicon-pencil"></span>
           <form ng-submit="cohort.editedRepo(info)">
               <input type="text" class="edit" ng-class="{editing: info.editRepo == true}" value="{{info.repo}}" ng-model="info.repo" ng-blur="cohort.cancelEditRepo(info)">
           </form>
+         </div>
+         <div class="col-xs-6">
+             <a class="btn btn-attendance btn-lg" ui-sref="attendance({ cohort: info.$id, instructor_id: cohort.user.uid })">
+                 Take Attendance
+             </a>
+         </div>
       </div>
       <div class="col-xs-4 counters">
          <button class="btn btn-tiy" ui-sref="students({ cohort: info.$id, instructor_id: cohort.user.uid })">View</button>

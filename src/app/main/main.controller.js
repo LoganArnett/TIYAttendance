@@ -3,7 +3,6 @@
 angular.module('tiyattendance')
   .factory('Auth', function(Fire, $firebaseObject, $state){
     var auth = new Firebase(Fire.Base.Url);
-    console.log(auth)
 
   return {
     /**
@@ -32,7 +31,8 @@ angular.module('tiyattendance')
 
     loggedIn: function(){
       if(auth.getAuth()){
-        return true;
+            $state.go('instructor', { instructor_id: authData.github.id } );
+            return true;
       }
     },
     /**
@@ -90,7 +90,7 @@ angular.module('tiyattendance')
       */
     Auth.onAuth(function(user){
         self.user = user;
-        if (user === null ){
+        if (self.user === null ){
           console.log('No Current User')
           return $state.go('login');
         }
